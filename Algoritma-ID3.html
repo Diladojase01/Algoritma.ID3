@@ -7,7 +7,7 @@
 
         <meta name="author" content="Dona Dellila Doja Se-Institut Teknologi Statistika dan Bisnis Muhammadiyah" />
     
-        <meta name="date" content="2022-12-28" />
+        <meta name="date" content="2022-12-29" />
     
     <title>Algoritma ID3</title>
 
@@ -1600,7 +1600,7 @@ margin-left: 0 !important;
                   <p class="author"><span class="glyphicon glyphicon-user"></span> Dona
 Dellila Doja Se-Institut Teknologi Statistika dan Bisnis
 Muhammadiyah</p>
-                        <p class="date"><span class="glyphicon glyphicon-calendar"></span> 2022-12-28</p>
+                        <p class="date"><span class="glyphicon glyphicon-calendar"></span> 2022-12-29</p>
           </div>
    </div>
      
@@ -1616,6 +1616,79 @@ text-align: justify}
 </style>
 <div id="r-markdown" class="section level1">
 <h1>R Markdown</h1>
+<p><strong>1. Definisi</strong></p>
+<p>Algoritma ID3 atau Iterative Dichotomiser 3 adalah sebuah metode yang
+digunakan untuk membuat pohon keputusan yang telah dikembangkan oleh J.
+Ross Quinlan sejak tahun 1986.</p>
+<p>Algoritma ID3 melakukan pencarian secara menyeluruh pada semua
+kemungkinan pohon keputusan. Algoritma ID3 berusaha membangun decision
+tree (pohon keputusan) secara top-down (dari atas ke bawah)</p>
+<p><strong>2. Strutur Pohon Keputusan</strong></p>
+<p>Struktur pohon keputusan terdiri dari root node (node akar), internal
+node (node cabang), dan leaf node. Proses klasifikasi dilakukan dari
+node paling atas dilanjutkan ke bawah melalui cabang-cabang sampai
+dihasilkan node daun (leafes) dimana node daun ini menunjukkan hasil
+akhir klasifikasi.</p>
+<p>Pembentukan pohon klasifikasi dengan algoritma ID3 melalui dua
+langkah, yaitu :</p>
+<ul>
+<li>Menghitung Nilai Entropy</li>
+<li>Menghitung nilai information gain dari setiap variabel</li>
+</ul>
+<p><strong>3. Tahapan Algoritma ID3</strong> Tahapan Algoritma ID3 bisa
+dibagi menjadi 6 langkah yaitu :</p>
+<ul>
+<li><p>Menyiapkan Dataset</p>
+<p>Dataset yang digunakan yaitu dataset yang berlabel nominal. Untuk
+algoritma ID3 menggunakan data jenis klasifikasi.</p></li>
+<li><p>Menghitung Nilai Entropy</p>
+<p>Konsep Entropy digunakan untuk mengukur “seberapa informatifnya”
+sebuah node (yang biasanya disebut seberapa baiknya).</p>
+<p>Rumus Entropy :</p>
+<pre><code>   𝑒𝑛𝑡𝑟𝑜𝑝𝑦 (𝑠)= −𝑝+𝑙𝑜𝑔2𝑝+ −𝑝_𝑙𝑜𝑔2𝑝_</code></pre></li>
+</ul>
+<p>Keterangan :</p>
+<p>S = Himpunan (dataset) Kasus.</p>
+<p>𝑝_(+) = jumlah label yang bersolusi positif (mendukung) dibagi total
+kasus.</p>
+<p>𝑝_(−)= jumlah label yang bersolusi negative (tidak mendukung) dibagi
+total kasus.</p>
+<ul>
+<li>Menghitung Nilai Gain</li>
+</ul>
+<p>Information gain adalah kriteria pemisahan yang menggunakan
+pengukuran entropy.Information gain digunakan untuk mengukur efektivitas
+suatu atribut dalam mengklasifikasikan data.</p>
+<pre><code> Rumus Information Gain :
+ 
+ </code></pre>
+<ul>
+<li>Menentukan Root Node</li>
+</ul>
+<p>Root node atau node akar ditentukan berdasarkan nilai information
+gain yang telah di cari. Atribut dengan nilai information gain tertinggi
+akan menjadi root node nya. Atribut yang telah di pilih tidak diikutkan
+lagi ke perhitungan entropy dan information gain selanjutnya.</p>
+<ul>
+<li>Membuat Node Cabang</li>
+</ul>
+<p>Node cabang di dapat dari perhitungan entropy dan information gain
+selanjutnya.</p>
+<ul>
+<li>Ulangi Langah 2-4 hingga membentuk sebuah pohon keputusan</li>
+</ul>
+<p>Mengulangi langkah 2-4 hingga membentuk pohon keputusan.</p>
+<p><strong>4. Penerapan Tahapan Algoritma ID3</strong></p>
+<ul>
+<li>Menyiapkan Dataset</li>
+</ul>
+<p>Disini menggunakan setosa iris sebagai berikut :</p>
+<pre><code>  df &lt;- iris
+  #df$Species&lt;- unclass(df$Species)
+  </code></pre>
+<ul>
+<li>Menghitung Nilai Entropy :</li>
+</ul>
 <p>This is an R Markdown document. Markdown is a simple formatting
 syntax for authoring HTML, PDF, and MS Word documents <span class="citation">(A. T. de Carvalho, Lechevallier, and Melo
 2012)</span>. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
@@ -1623,7 +1696,7 @@ syntax for authoring HTML, PDF, and MS Word documents <span class="citation">(A.
 generated that includes both content as well as the output of any
 embedded R code chunks within the document. You can embed an R code
 chunk like this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cars)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cars)</span></code></pre></div>
 <pre><code>##      speed           dist       
 ##  Min.   : 4.0   Min.   :  2.00  
 ##  1st Qu.:12.0   1st Qu.: 26.00  

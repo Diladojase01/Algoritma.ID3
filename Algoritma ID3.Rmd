@@ -22,7 +22,95 @@ text-align: justify}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# R Markdown
+# R Markdown 
+
+**1. Definisi**
+
+Algoritma ID3 atau Iterative Dichotomiser 3 adalah sebuah metode yang digunakan untuk membuat pohon keputusan yang telah dikembangkan oleh J. Ross Quinlan sejak tahun 1986.
+
+Algoritma ID3 melakukan pencarian secara menyeluruh pada semua kemungkinan pohon keputusan. Algoritma ID3 berusaha membangun decision tree (pohon keputusan) secara top-down (dari atas ke bawah)
+
+**2. Strutur Pohon Keputusan**
+
+Struktur pohon keputusan terdiri dari root node (node akar), internal node (node cabang), dan leaf node. Proses klasifikasi dilakukan dari node paling atas dilanjutkan ke bawah melalui cabang-cabang sampai dihasilkan node daun (leafes) dimana node daun ini menunjukkan hasil akhir klasifikasi.
+
+Pembentukan pohon klasifikasi dengan algoritma ID3 melalui dua langkah, yaitu :
+
+  - Menghitung Nilai Entropy
+  - Menghitung nilai information gain dari setiap variabel
+     
+**3. Tahapan Algoritma ID3**
+Tahapan Algoritma ID3 bisa dibagi menjadi 6 langkah yaitu :
+
+  - Menyiapkan Dataset
+     
+     Dataset yang digunakan yaitu dataset yang berlabel nominal.
+     Untuk algoritma ID3 menggunakan data jenis klasifikasi.   
+     
+     
+  - Menghitung Nilai Entropy
+     
+     Konsep Entropy digunakan untuk mengukur “seberapa
+     informatifnya” sebuah node (yang biasanya disebut seberapa
+     baiknya).
+     
+     Rumus Entropy :
+     
+           𝑒𝑛𝑡𝑟𝑜𝑝𝑦 (𝑠)= −𝑝+𝑙𝑜𝑔2𝑝+ −𝑝_𝑙𝑜𝑔2𝑝_
+     
+   Keterangan :
+     
+   S = Himpunan (dataset) Kasus.
+  
+  𝑝_(+) = jumlah label yang bersolusi positif (mendukung)
+  dibagi total kasus. 
+  
+  𝑝_(−)= jumlah label yang bersolusi negative (tidak mendukung)
+  dibagi total kasus.
+
+
+  - Menghitung Nilai Gain
+     
+  Information gain adalah kriteria pemisahan yang menggunakan
+  pengukuran entropy.Information gain digunakan untuk mengukur
+  efektivitas suatu atribut dalam mengklasifikasikan data.
+     
+     Rumus Information Gain :
+     
+     
+
+  - Menentukan Root Node
+  
+  Root node atau node akar ditentukan berdasarkan nilai information
+  gain yang telah di cari. Atribut dengan nilai information gain
+  tertinggi akan menjadi root node nya. Atribut yang telah di pilih
+  tidak diikutkan lagi ke perhitungan entropy dan information gain
+  selanjutnya. 
+
+
+  - Membuat Node Cabang
+  
+  Node cabang di dapat dari perhitungan entropy dan information
+  gain selanjutnya.
+
+
+  - Ulangi Langah 2-4 hingga membentuk sebuah pohon keputusan
+  
+  Mengulangi langkah 2-4 hingga membentuk pohon keputusan.
+
+**4.  Penerapan Tahapan Algoritma ID3**
+
+  - Menyiapkan Dataset
+  
+  Disini menggunakan setosa iris sebagai berikut :
+  
+      df <- iris
+      #df$Species<- unclass(df$Species)
+      
+  - Menghitung Nilai Entropy :
+    
+    
+
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents [@deCarvalho2012]. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
