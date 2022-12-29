@@ -1,7 +1,7 @@
 ---
-title: "Algoritma ID3"
+title: "Algoritma ID3 Dengan R"
 date: "`r Sys.Date()`"
-author: Dona Dellila Doja Se-Institut Teknologi Statistika dan Bisnis Muhammadiyah
+author: "Dona Dellila Doja Se-Institut Teknologi Statistika dan Bisnis Muhammadiyah"
 output:
   rmdformats::readthedown:
     self_contained: true
@@ -22,15 +22,15 @@ text-align: justify}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# R Markdown 
+# Algoritma ID3
 
-**1. Definisi**
+### Pengertian
 
 Algoritma ID3 atau Iterative Dichotomiser 3 adalah sebuah metode yang digunakan untuk membuat pohon keputusan yang telah dikembangkan oleh J. Ross Quinlan sejak tahun 1986.
 
 Algoritma ID3 melakukan pencarian secara menyeluruh pada semua kemungkinan pohon keputusan. Algoritma ID3 berusaha membangun decision tree (pohon keputusan) secara top-down (dari atas ke bawah)
 
-**2. Strutur Pohon Keputusan**
+### Strutur Pohon Keputusan
 
 Struktur pohon keputusan terdiri dari root node (node akar), internal node (node cabang), dan leaf node. Proses klasifikasi dilakukan dari node paling atas dilanjutkan ke bawah melalui cabang-cabang sampai dihasilkan node daun (leafes) dimana node daun ini menunjukkan hasil akhir klasifikasi.
 
@@ -39,20 +39,17 @@ Pembentukan pohon klasifikasi dengan algoritma ID3 melalui dua langkah, yaitu :
   - Menghitung Nilai Entropy
   - Menghitung nilai information gain dari setiap variabel
      
-**3. Tahapan Algoritma ID3**
+# Tahapan Algoritma ID3
 Tahapan Algoritma ID3 bisa dibagi menjadi 6 langkah yaitu :
 
-  - Menyiapkan Dataset
+### Menyiapkan Dataset 
      
-     Dataset yang digunakan yaitu dataset yang berlabel nominal.
-     Untuk algoritma ID3 menggunakan data jenis klasifikasi.   
+  Dataset yang digunakan yaitu dataset yang berlabel nominal. Untuk algoritma ID3 menggunakan data jenis klasifikasi.   
      
      
-  - Menghitung Nilai Entropy
-     
-     Konsep Entropy digunakan untuk mengukur “seberapa
-     informatifnya” sebuah node (yang biasanya disebut seberapa
-     baiknya).
+### Menghitung Nilai Entropy
+    
+  Konsep Entropy digunakan untuk mengukur “seberapa informatifnya” sebuah node (yang biasanya disebut seberapa baiknya).
      
      Rumus Entropy :
      
@@ -69,65 +66,125 @@ Tahapan Algoritma ID3 bisa dibagi menjadi 6 langkah yaitu :
   dibagi total kasus.
 
 
-  - Menghitung Nilai Gain
-     
-  Information gain adalah kriteria pemisahan yang menggunakan
-  pengukuran entropy.Information gain digunakan untuk mengukur
-  efektivitas suatu atribut dalam mengklasifikasikan data.
+### Menghitung Nilai Gain
+
+  Information gain adalah kriteria pemisahan yang menggunakan pengukuran entropy.Information gain digunakan untuk mengukur efektivitas suatu atribut dalam mengklasifikasikan data.
      
      Rumus Information Gain :
      
      
 
-  - Menentukan Root Node
+### Menentukan Root Node
   
-  Root node atau node akar ditentukan berdasarkan nilai information
-  gain yang telah di cari. Atribut dengan nilai information gain
-  tertinggi akan menjadi root node nya. Atribut yang telah di pilih
-  tidak diikutkan lagi ke perhitungan entropy dan information gain
-  selanjutnya. 
+  Root node atau node akar ditentukan berdasarkan nilai information gain yang telah di cari. Atribut dengan nilai information gain tertinggi akan menjadi root node nya. Atribut yang telah di pilih tidak diikutkan lagi ke perhitungan entropy dan information gain selanjutnya. 
 
 
-  - Membuat Node Cabang
+### Membuat Node Cabang
   
-  Node cabang di dapat dari perhitungan entropy dan information
-  gain selanjutnya.
+  Node cabang di dapat dari perhitungan entropy dan information gain selanjutnya.
 
 
-  - Ulangi Langah 2-4 hingga membentuk sebuah pohon keputusan
+### Ulangi Langah 2-4 hingga membentuk sebuah pohon keputusan
   
   Mengulangi langkah 2-4 hingga membentuk pohon keputusan.
 
-**4.  Penerapan Tahapan Algoritma ID3**
+#  Eksperimen Algoritma ID3
+### Library
+```{r}
+library(dplyr)
 
-  - Menyiapkan Dataset
-  
-  Disini menggunakan setosa iris sebagai berikut :
-  
-      df <- iris
-      #df$Species<- unclass(df$Species)
-      
-  - Menghitung Nilai Entropy :
-    
-    
-
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents [@deCarvalho2012]. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
 ```
 
-## Including Plots
+### Loading Data set
 
-You can also embed plots, for example:
+sebagai contoh kita akan menggunakan dataset iris 
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+df <- iris
+#df$Species<- unclass(df$Species)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### Menghitung Nilai Entropy 
 
-# Referensi
+Nilai entropy pada setiap kolom/fitur dapat dihitung dapat dihitung sebagai berikut
+
+```{r}
+entropy <- function(target) {
+  freq <- table(target)/length(target)
+  # Vektorisasi kolom dataframe
+  vec <- as.data.frame(freq)[,2]
+  #drop 0 to avoid NaN resulting from log2
+  vec<-vec[vec>0]
+  # Menghitung Nilai Entropy
+  -sum(vec * log2(vec))
+}
+# Menghitung Nilai Entropy Kolom Species
+print(entropy(df$Species))
+```
+```{r}
+# Menghitung Nilai Entropy Kolom Sepal.Width
+print(entropy(df$Sepal.Width))
+```
+
+### Nilai Information Gain
+
+Menghitung nilai information gain dari setipa fitur/ kolom dapat dilakukan sebagai berikut 
+
+```{r}
+IG_numeric<-function(data, feature, target, bins=4) {
+  #Hapus baris di mana fiturnya adalah NA
+  data<-data[!is.na(data[,feature]),]
+  #Menghitung entropi untuk induk(label data)
+  e0<-entropy(data[,target])
+  
+  data$cat<-cut(data[,feature], breaks=bins, labels=c(1:bins))
+  
+  #gunakan dplyr untuk menghitung e dan p untuk setiap nilai fitur
+  dd_data <- data %>% group_by(cat) %>% summarise(e=entropy(get(target)), 
+                 n=length(get(target)),
+                 min=min(get(feature)),
+                 max=max(get(feature))
+                 )
+  
+  #hitung p untuk setiap nilai fitur
+  dd_data$p<-dd_data$n/nrow(data)
+  #menghitung IG
+  IG<-e0-sum(dd_data$p*dd_data$e)
+  
+  return(IG)
+}
+
+IG_numeric(df, "Sepal.Length", "Species", bins=5)
+```
+
+### Data Frame
+
+Data Frame untuk Nilai Entropy dan Information Gain Setiap Kolom yang diurutkan sebagai berikut
+
+```{r}
+Fitur_Exploration <- function(df, bin){
+  E <- numeric()
+  for (i in 1:ncol(df)){
+    nama<-names(df)[i]
+    E[i]<-entropy(df[,nama])
+    }
+  
+  ig <- numeric()
+  kol=ncol(df)-1
+  for (i in 1:kol){
+    ig[i]<-IG_numeric(df, names(df)[i], names(df)[ncol(df)], bins=bin)
+  }
+  ig[ncol(df)]<-0 #Masih dicek lagi
+  Column_Name <- names(df)
+  Entropy <- E
+  IG <- ig
+  df_E <- data.frame(Column_Name, Entropy, IG)
+  df_E_sort <- df_E[order(-IG),]
+  return(df_E_sort)
+} 
+
+Fitur_Exploration(df,5)
+```
+
+# referance
+
