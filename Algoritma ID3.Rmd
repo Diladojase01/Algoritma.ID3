@@ -106,7 +106,7 @@ df <- iris
 
 ### Menghitung Nilai Entropy 
 
-Nilai entropy pada setiap kolom/fitur dapat dihitung dapat dihitung sebagai berikut
+Nilai entropy pada setiap kolom/fitur dapat dihitung sebagai berikut
 
 ```{r}
 entropy <- function(target) {
@@ -116,8 +116,7 @@ entropy <- function(target) {
   #drop 0 to avoid NaN resulting from log2
   vec<-vec[vec>0]
   # Menghitung Nilai Entropy
-  -sum(vec * log2(vec))
-}
+  -sum(vec * log2(vec))}
 # Menghitung Nilai Entropy Kolom Species
 print(entropy(df$Species))
 ```
@@ -186,5 +185,6 @@ Fitur_Exploration <- function(df, bin){
 Fitur_Exploration(df,5)
 ```
 
-# referance
+# Referensi
+
 

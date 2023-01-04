@@ -7,7 +7,7 @@
 
         <meta name="author" content="Dona Dellila Doja Se-Institut Teknologi Statistika dan Bisnis Muhammadiyah" />
     
-        <meta name="date" content="2022-12-29" />
+        <meta name="date" content="2023-01-05" />
     
     <title>Algoritma ID3 Dengan R</title>
 
@@ -1593,14 +1593,14 @@ margin-left: 0 !important;
       <li><a href="#tahapan-algoritma-id3" id="toc-tahapan-algoritma-id3">Tahapan Algoritma ID3</a></li>
       <li><a href="#eksperimen-algoritma-id3" id="toc-eksperimen-algoritma-id3">Eksperimen Algoritma
       ID3</a></li>
-      <li><a href="#referance" id="toc-referance">referance</a></li>
+      <li><a href="#referensi" id="toc-referensi">Referensi</a></li>
       </ul>
     </div>
     <div id="postamble" data-toggle="wy-nav-shift" class="status">
                   <p class="author"><span class="glyphicon glyphicon-user"></span> Dona
 Dellila Doja Se-Institut Teknologi Statistika dan Bisnis
 Muhammadiyah</p>
-                        <p class="date"><span class="glyphicon glyphicon-calendar"></span> 2022-12-29</p>
+                        <p class="date"><span class="glyphicon glyphicon-calendar"></span> 2023-01-05</p>
           </div>
    </div>
      
@@ -1711,8 +1711,8 @@ selanjutnya.</p>
 </div>
 <div id="menghitung-nilai-entropy-1" class="section level3">
 <h3>Menghitung Nilai Entropy</h3>
-<p>Nilai entropy pada setiap kolom/fitur dapat dihitung dapat dihitung
-sebagai berikut</p>
+<p>Nilai entropy pada setiap kolom/fitur dapat dihitung sebagai
+berikut</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>entropy <span class="ot">&lt;-</span> <span class="cf">function</span>(target) {</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  freq <span class="ot">&lt;-</span> <span class="fu">table</span>(target)<span class="sc">/</span><span class="fu">length</span>(target)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Vektorisasi kolom dataframe</span></span>
@@ -1720,10 +1720,9 @@ sebagai berikut</p>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">#drop 0 to avoid NaN resulting from log2</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  vec<span class="ot">&lt;-</span>vec[vec<span class="sc">&gt;</span><span class="dv">0</span>]</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Menghitung Nilai Entropy</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fu">sum</span>(vec <span class="sc">*</span> <span class="fu">log2</span>(vec))</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Menghitung Nilai Entropy Kolom Species</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">entropy</span>(df<span class="sc">$</span>Species))</span></code></pre></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fu">sum</span>(vec <span class="sc">*</span> <span class="fu">log2</span>(vec))}</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Menghitung Nilai Entropy Kolom Species</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">entropy</span>(df<span class="sc">$</span>Species))</span></code></pre></div>
 <pre><code>## [1] 1.584963</code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Menghitung Nilai Entropy Kolom Sepal.Width</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">entropy</span>(df<span class="sc">$</span>Sepal.Width))</span></code></pre></div>
@@ -1793,8 +1792,8 @@ diurutkan sebagai berikut</p>
 ## 5      Species 1.584963 0.0000000</code></pre>
 </div>
 </div>
-<div id="referance" class="section level1">
-<h1>referance</h1>
+<div id="referensi" class="section level1">
+<h1>Referensi</h1>
 </div>
 </div>
 
