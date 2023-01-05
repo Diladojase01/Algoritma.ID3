@@ -92,7 +92,6 @@ Tahapan Algoritma ID3 bisa dibagi menjadi 6 langkah yaitu :
 ### Library
 ```{r}
 library(dplyr)
-
 ```
 
 ### Loading Data set
@@ -100,8 +99,8 @@ library(dplyr)
 sebagai contoh kita akan menggunakan dataset iris 
 
 ```{r}
-df <- iris
-#df$Species<- unclass(df$Species)
+data("iris")
+View(iris)
 ```
 
 ### Menghitung Nilai Entropy 
@@ -185,6 +184,21 @@ Fitur_Exploration <- function(df, bin){
 Fitur_Exploration(df,5)
 ```
 
+### Pohon Keputusan
+
+```{r}
+library(party)
+library(rpart)
+library(rpart.plot)
+```
+
+
+
+
+
+
 # Referensi
+
+1. https://rpubs.com/Eliyanto29/Entropy_and_Information_G
 
 
