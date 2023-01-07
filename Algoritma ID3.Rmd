@@ -68,12 +68,8 @@ Tahapan Algoritma ID3 bisa dibagi menjadi 6 langkah yaitu :
 
 ### Menghitung Nilai Gain
 
-  Information gain adalah kriteria pemisahan yang menggunakan pengukuran entropy.Information gain digunakan untuk mengukur efektivitas suatu atribut dalam mengklasifikasikan data.
+  Information gain adalah kriteria pemisahan yang menggunakan pengukuran entropy.  Information gain digunakan untuk mengukur efektivitas suatu atribut dalam mengklasifikasikan data.
      
-     Rumus Information Gain :
-     
-     
-
 ### Menentukan Root Node
   
   Root node atau node akar ditentukan berdasarkan nilai information gain yang telah di cari. Atribut dengan nilai information gain tertinggi akan menjadi root node nya. Atribut yang telah di pilih tidak diikutkan lagi ke perhitungan entropy dan information gain selanjutnya. 
@@ -99,8 +95,9 @@ library(dplyr)
 sebagai contoh kita akan menggunakan dataset iris 
 
 ```{r}
-data("iris")
-View(iris)
+df <- iris
+#df$Species<- unclass(df$Species)
+
 ```
 
 ### Menghitung Nilai Entropy 
@@ -184,13 +181,6 @@ Fitur_Exploration <- function(df, bin){
 Fitur_Exploration(df,5)
 ```
 
-### Pohon Keputusan
-
-```{r}
-library(party)
-library(rpart)
-library(rpart.plot)
-```
 
 
 
