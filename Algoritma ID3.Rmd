@@ -180,11 +180,24 @@ Fitur_Exploration <- function(df, bin){
 
 Fitur_Exploration(df,5)
 ```
+# membuat Pohon Keputusan
 
-
-
-
-
+```{r}
+data("iris")
+names(iris)
+table(iris$Species)
+head(iris)
+```
+```{r}
+library(psych)
+describe(iris)
+```
+```{r}
+library(rpart)
+library(rpart.plot)
+trees<-rpart(Species ~., data = iris, method = 'class')
+rpart.plot(trees)
+```
 
 
 # Referensi
