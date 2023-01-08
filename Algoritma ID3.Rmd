@@ -24,13 +24,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Algoritma ID3
 
-### Pengertian
+#### Pengertian
 
 Algoritma ID3 atau Iterative Dichotomiser 3 adalah sebuah metode yang digunakan untuk membuat pohon keputusan yang telah dikembangkan oleh J. Ross Quinlan sejak tahun 1986.
 
 Algoritma ID3 melakukan pencarian secara menyeluruh pada semua kemungkinan pohon keputusan. Algoritma ID3 berusaha membangun decision tree (pohon keputusan) secara top-down (dari atas ke bawah)
 
-### Strutur Pohon Keputusan
+#### Strutur Pohon Keputusan
 
 Struktur pohon keputusan terdiri dari root node (node akar), internal node (node cabang), dan leaf node. Proses klasifikasi dilakukan dari node paling atas dilanjutkan ke bawah melalui cabang-cabang sampai dihasilkan node daun (leafes) dimana node daun ini menunjukkan hasil akhir klasifikasi.
 
@@ -42,57 +42,63 @@ Pembentukan pohon klasifikasi dengan algoritma ID3 melalui dua langkah, yaitu :
 # Tahapan Algoritma ID3
 Tahapan Algoritma ID3 bisa dibagi menjadi 6 langkah yaitu :
 
-### Menyiapkan Dataset 
+#### Menyiapkan Dataset 
      
   Dataset yang digunakan yaitu dataset yang berlabel nominal. Untuk algoritma ID3 menggunakan data jenis klasifikasi.   
      
      
-### Menghitung Nilai Entropy
+#### Menghitung Nilai Entropy
     
   Konsep Entropy digunakan untuk mengukur “seberapa informatifnya” sebuah node (yang biasanya disebut seberapa baiknya).
      
      Rumus Entropy :
      
-           𝑒𝑛𝑡𝑟𝑜𝑝𝑦 (𝑠)= −𝑝+𝑙𝑜𝑔2𝑝+ −𝑝_𝑙𝑜𝑔2𝑝_
+    𝑒𝑛𝑡𝑟𝑜𝑝𝑦 (𝑠)= −𝑝(+)𝑙𝑜𝑔2𝑝(+) −𝑝(-)𝑙𝑜𝑔2𝑝(-)
      
    Keterangan :
      
    S = Himpunan (dataset) Kasus.
   
-  𝑝_(+) = jumlah label yang bersolusi positif (mendukung)
+  𝑝(+) = jumlah label yang bersolusi positif (mendukung)
   dibagi total kasus. 
   
-  𝑝_(−)= jumlah label yang bersolusi negative (tidak mendukung)
+  𝑝(−) = jumlah label yang bersolusi negative (tidak mendukung)
   dibagi total kasus.
 
 
-### Menghitung Nilai Gain
+#### Menghitung Nilai Gain
 
   Information gain adalah kriteria pemisahan yang menggunakan pengukuran entropy.  Information gain digunakan untuk mengukur efektivitas suatu atribut dalam mengklasifikasikan data.
-     
-### Menentukan Root Node
+  
+  
+#### Menentukan Root Node
   
   Root node atau node akar ditentukan berdasarkan nilai information gain yang telah di cari. Atribut dengan nilai information gain tertinggi akan menjadi root node nya. Atribut yang telah di pilih tidak diikutkan lagi ke perhitungan entropy dan information gain selanjutnya. 
 
 
-### Membuat Node Cabang
+#### Membuat Node Cabang
   
   Node cabang di dapat dari perhitungan entropy dan information gain selanjutnya.
 
 
-### Ulangi Langah 2-4 hingga membentuk sebuah pohon keputusan
+#### Ulangi Langah 2-4 hingga membentuk sebuah pohon keputusan
   
   Mengulangi langkah 2-4 hingga membentuk pohon keputusan.
 
 #  Eksperimen Algoritma ID3
-### Library
+
+#### Library
 ```{r}
 library(dplyr)
 ```
 
-### Loading Data set
+#### Loading Data set
 
 sebagai contoh kita akan menggunakan dataset iris 
+```{r}
+library(data.tree)
+View(iris)
+```
 
 ```{r}
 df <- iris
@@ -100,9 +106,9 @@ df <- iris
 
 ```
 
-### Menghitung Nilai Entropy 
+#### Menghitung Nilai Entropy 
 
-Nilai entropy pada setiap kolom/fitur dapat dihitung sebagai berikut
+Nilai entropy pada setiap kolom dapat dihitung sebagai berikut
 
 ```{r}
 entropy <- function(target) {
@@ -113,43 +119,59 @@ entropy <- function(target) {
   vec<-vec[vec>0]
   # Menghitung Nilai Entropy
   -sum(vec * log2(vec))}
-# Menghitung Nilai Entropy Kolom Species
+```
+
+Menghitung Nilai Entropy kolom Species
+```{r}
 print(entropy(df$Species))
 ```
+Menghitung Nilai Entropy kolom sepal.lenght
 ```{r}
-# Menghitung Nilai Entropy Kolom Sepal.Width
+print(entropy(df$Sepal.Length))
+```
+Menghitung Nilai Entropy kolom sepal.width
+```{r}
 print(entropy(df$Sepal.Width))
 ```
+Menghitung Nilai Entropy kolom petal.length
+```{r}
+print(entropy(df$Petal.Length))
+```
+Menghitung Nilai Entropy kolom petal.width
+```{r}
+print(entropy(df$Petal.Width))
+```
 
-### Nilai Information Gain
+#### Nilai Information Gain
 
-Menghitung nilai information gain dari setipa fitur/ kolom dapat dilakukan sebagai berikut 
+Menghitung nilai information gain dari setiap kolom dapat dilakukan sebagai berikut :
+
 
 ```{r}
+#mengembalikan IG untuk variabel numerik
 IG_numeric<-function(data, feature, target, bins=4) {
-  #Hapus baris di mana fiturnya adalah NA
+  #Hapus baris di mana fitur adalah NA
   data<-data[!is.na(data[,feature]),]
-  #Menghitung entropi untuk induk(label data)
+  #menghitung entropi untuk induknya
   e0<-entropy(data[,target])
   
   data$cat<-cut(data[,feature], breaks=bins, labels=c(1:bins))
   
-  #gunakan dplyr untuk menghitung e dan p untuk setiap nilai fitur
+  #gunakan dplyr untuk menghitung e dan p untuk setiap nilai kolom
   dd_data <- data %>% group_by(cat) %>% summarise(e=entropy(get(target)), 
                  n=length(get(target)),
                  min=min(get(feature)),
                  max=max(get(feature))
                  )
   
-  #hitung p untuk setiap nilai fitur
+  #menghitung p untuk setiap nilai kolom
   dd_data$p<-dd_data$n/nrow(data)
-  #menghitung IG
+  #Menghitung IG
   IG<-e0-sum(dd_data$p*dd_data$e)
   
   return(IG)
 }
-
-IG_numeric(df, "Sepal.Length", "Species", bins=5)
+IG_numeric(iris, "Sepal.Length", "Species", bins=5)
 ```
 
 ### Data Frame
@@ -183,16 +205,6 @@ Fitur_Exploration(df,5)
 # membuat Pohon Keputusan
 
 ```{r}
-data("iris")
-names(iris)
-table(iris$Species)
-head(iris)
-```
-```{r}
-library(psych)
-describe(iris)
-```
-```{r}
 library(rpart)
 library(rpart.plot)
 trees<-rpart(Species ~., data = iris, method = 'class')
@@ -203,5 +215,10 @@ rpart.plot(trees)
 # Referensi
 
 1. https://rpubs.com/Eliyanto29/Entropy_and_Information_G
+2.https://medium.com/analytics-vidhya/visualizing-decision-tree-with-r-774f58ac23c
+3. https://rpubs.com/gluc/ID3
+4. https://rstudio-pubs-static.s3.amazonaws.com/455435_30729e265f7a4d049400d03a18e218db.html
+
+
 
 
