@@ -189,7 +189,7 @@ Fitur_Exploration <- function(df, bin){
 
 Fitur_Exploration(df,5)
 ```
-# Membuat Pohon Keputusan
+# Membuat Pohon Keputusan dila
 ```{r}
 library(rpart)
 library(rpart.plot)
